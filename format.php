@@ -39,11 +39,19 @@ course_create_sections_if_missing($course, 0);
 
 $renderer = $format->get_renderer($PAGE);
 
-// Output course content.
-if (!empty($displaysection)) {
-    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
-} else {
-    $renderer->print_multiple_section_page($course, null, null, null, null);
+// In Moodle 4.0 the page editing is controlled by the format base class.
+if ($format->show_editor()) {
+    echo $OUTPUT->notification("You are editing");
 }
+
+// The base class has a method to decide the display mode (single/multiple section).
+if (!empty($displaysection)) {
+    $format->set_section_number($displaysection);
+}
+
+// All course rendering is controlled by the content output class.
+$outputclass = $format->get_output_classname('content');
+$widget = new $outputclass($format);
+echo $renderer->render($widget);
 
 // Include any format js module here using $PAGE->requires->js.
