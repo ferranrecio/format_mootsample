@@ -53,6 +53,10 @@ class format_mootsample extends core_courseformat\base {
         return $ajaxsupport;
     }
 
+    public function supports_components() {
+        return true;
+    }
+
     /**
      * Whether this format allows to delete sections.
      *
