@@ -39,6 +39,10 @@ class format_mootsample extends core_courseformat\base {
         return false;
     }
 
+    public function uses_course_index() {
+        return true;
+    }
+
     /**
      * Returns the information about the ajax support in the given source format.
      *
